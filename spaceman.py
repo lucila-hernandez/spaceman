@@ -2,11 +2,13 @@ import random
 
 def load_word():
     '''
-    A function that reads a text file of words and randomly selects one to use as the secret word
-        from the list.
+    Open the file titled words.txt 
+    Read all the content from the file and save it in a list called words_list
+    Close the file words.txt
 
-    Returns: 
-           string: The secret word to be used in the spaceman guessing game
+    Choose a random word from the words_list 
+    Return the random word that was selected from the list
+
     '''
     f = open('words.txt', 'r')
     words_list = f.readlines()
@@ -15,6 +17,8 @@ def load_word():
     words_list = words_list[0].split(' ') #comment this line out if you use a words.txt file with each word on a new line
     secret_word = random.choice(words_list)
     return secret_word
+
+
 
 def is_word_guessed(secret_word, letters_guessed):
     '''
@@ -27,8 +31,15 @@ def is_word_guessed(secret_word, letters_guessed):
     Returns: 
         bool: True only if all the letters of secret_word are in letters_guessed, False otherwise
     '''
+
+    for letter in secret_word:
+        if letter not in letters_guessed:
+            return False
+    return True
+
+
     # TODO: Loop through the letters in the secret_word and check if a letter is not in lettersGuessed
-    pass
+  
 
 def get_guessed_word(secret_word, letters_guessed):
     '''
@@ -44,7 +55,16 @@ def get_guessed_word(secret_word, letters_guessed):
 
     #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
 
-    pass
+    guessed_word = ""
+
+    for letter in secret_word:
+        if letter in letters_guessed:
+            guessed_word += letter
+        else: 
+            guessed_word += "_"
+
+    return guessed_word
+
 
 
 def is_guess_in_word(guess, secret_word):
@@ -61,7 +81,7 @@ def is_guess_in_word(guess, secret_word):
     '''
     #TODO: check if the letter guess is in the secret word
 
-    pass
+    return guess in secret_word
 
 
 
