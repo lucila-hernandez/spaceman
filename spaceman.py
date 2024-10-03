@@ -94,10 +94,16 @@ def spaceman(secret_word):
       secret_word (string): the secret word to guess.
 
     '''
-
+game_state = {
+    "letters_guessed": [],
+    "incorrect_guesses": 0,
+    "max_incorrect_guesses":  7
+    }
 
     #TODO: show the player information about the game according to the project spec
-
+print("👋 Hi! Welcome to Spaceman, the guessing game!" ) 
+print("🔍 You get 7 chances to discover what the mystery word is.")
+print("🚀 Let's get started!")
     #TODO: Ask the player to guess one letter per round and check that it is only one letter
 
     #TODO: Check if the guessed letter is in the secret or not and give the player feedback
