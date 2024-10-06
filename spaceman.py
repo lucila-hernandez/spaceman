@@ -22,11 +22,7 @@ def is_word_guessed(secret_word, letters_guessed):
     For each letter that is in the secret word chosen.If a letter has not been guessed it will let the player know. If the letter has been guessed it will let the player know.
     '''
 
-    for letter in secret_word:
-        if letter not in letters_guessed:
-            return False
-    return True
-
+    return all(letter in letters_guessed for letter in secret_word)
 
     # TODO: Loop through the letters in the secret_word and check if a letter is not in lettersGuessed
   
@@ -40,15 +36,7 @@ def get_guessed_word(secret_word, letters_guessed):
 
     #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
 
-    guessed_word = ""
-
-    for letter in secret_word:  
-        if letter in letters_guessed:  
-            guessed_word += letter  
-        else: 
-            guessed_word += "_"  
-
-    return guessed_word
+    return "".join(letter if letter in letters_guessed else "_" for letter in secret_word)  # List comprehension
 
 
 
@@ -77,45 +65,47 @@ def spaceman(secret_word):
     game_state = {
         "letters_guessed": [],
         "incorrect_guesses": 0,
-        "max_incorrect_guesses":  7
+        "max_incorrect_guesses": 7
     }
 
     #TODO: show the player information about the game according to the project spec
     print("👋 Hi! Welcome to Spaceman, the guessing game!") 
-    print("🔍 You get 7 chances to discover what the mystery word is.")
+    print("🕵️‍♂️ You get 7 chances to discover what the mystery word is.")
     print("🚀 Let's get started!")
 
     #TODO: show the guessed word so far
     while game_state["incorrect_guesses"] < game_state["max_incorrect_guesses"]:
         guessed_word = get_guessed_word(secret_word, game_state["letters_guessed"])
-        print("Current word:" + guessed_word)
+        print("🔍 The word you are guessing is: " + guessed_word)
 
     #TODO: Ask the player to guess one letter per round and check that it is only one letter
         guess = input("Guess a letter: ").lower()
 
-        if len(guess) != 1 or not guess.isalpha():
-            print("Please guess one letter at a time.")
+        if len(guess) != 1 or not guess.isalpha():  
+            print("🙏 Please guess one letter at a time.")
             continue
 
-        if guess in game_state["letters_guessed"]:
-            print("You've already guessed that letter. Try again.")
+        if guess in game_state["letters_guessed"]: 
+            print("❗ Try again. You've already guessed that letter. ")
             continue
 
-    game_state["letters_guessed"].append(guess)
+        game_state["letters_guessed"].append(guess) 
 
     #TODO: Check if the guessed letter is in the secret or not and give the player feedback
-    if is_guess_in_word(guess,secret_word):
-        print("Good guess!")
-    else:
-        print("oops! That letter is not in the word.")
-        game_state["incorrect_guesses"] += 1
+        if is_guess_in_word(guess, secret_word):
+            print("✨ Good guess! The letter appears in the word.")
+        else:
+            print("😬 Sorry! That letter is not in the word.")
+            game_state["incorrect_guesses"] += 1  
+            print(f"You have {game_state['max_incorrect_guesses'] - game_state['incorrect_guesses']} guesses left.")
+        print("___________________________________________________________") 
 
-    #TODO: check if the game has been won or lost
-
-    if is_word_guessed(secret_word, game_state["letters_guessed"]):
-        print("🏆 Congratulations! You've guessed the word: " + secret_word)
-        return 
-    print("😢 Sorry, you've run out of guesses. The word was:" + secret_word)
+        # Check if the game has been won
+        if is_word_guessed(secret_word, game_state["letters_guessed"]):
+            print("🏆 Congratulations! You guessed the word: " + secret_word)
+            return
+        
+    print("😢 Sorry, you've run out of guesses. The word was: " + secret_word)
 
 
 #These function calls that will start the game
