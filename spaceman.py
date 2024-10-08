@@ -27,6 +27,7 @@ def is_word_guessed(secret_word, letters_guessed):
     # TODO: Loop through the letters in the secret_word and check if a letter is not in lettersGuessed
   
 
+
 def get_guessed_word(secret_word, letters_guessed):
     '''
     The random word the player is trying to guess. 
@@ -36,7 +37,7 @@ def get_guessed_word(secret_word, letters_guessed):
 
     #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
 
-    return "".join(letter if letter in letters_guessed else "_" for letter in secret_word)  # List comprehension
+    return "".join(letter if letter in letters_guessed else "_" for letter in secret_word)  
 
 
 
@@ -49,7 +50,6 @@ def is_guess_in_word(guess, secret_word):
     #TODO: check if the letter guess is in the secret word
 
     return guess in secret_word
-
 
 
 
@@ -100,7 +100,7 @@ def spaceman(secret_word):
             print(f"You have {game_state['max_incorrect_guesses'] - game_state['incorrect_guesses']} guesses left.")
         print("___________________________________________________________") 
 
-        # Check if the game has been won
+    #TODO: Check if the game has been won or lost
         if is_word_guessed(secret_word, game_state["letters_guessed"]):
             print("🏆 Congratulations! You guessed the word: " + secret_word)
             return
